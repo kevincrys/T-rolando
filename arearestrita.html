@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="normalize.css">
+    <link rel="stylesheet" href="./index.css">
+    <title>Área Restrita - Faça Login</title>
+    <style>
+        .areaRestrita {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            background-color: rgba(0, 255, 255, 0.9);
+        }
+
+        .login,
+        .signup {
+            width: 40%;
+            margin: 3%;
+            float: left;
+        }
+    </style>
+    <script>
+        function login() {
+        // fazer login
+            let email = document.getElementById("emaillogar");
+            let senha = document.getElementById("senhalogar");
+            alert("Seu e-mail: " + email.value);
+            if (email.value == localStorage.getItem("email", email.value)) {
+                alert("E-mail correto");
+                if (senha.value == localStorage.getItem("senha", senha.value)) {
+                    alert("Senha correta");
+                    alert("ESTÁ LOGADO NO SITE!");
+                    localStorage.setItem("logado", true);
+                    window.location.href= "denuncia.html";
+                    
+                } else {
+                    alert("ERRO: Senha incorreta");
+                }
+            } else {
+                alert("ERRO: E-mail não registrado");
+            }
+        }
+        function registrar() {
+            //dados de login
+            let email = document.getElementById("emailregistrar");
+            let senha = document.getElementById("senharegistrar");
+            let nome = document.getElementById("nomeregistrar");
+            //apenas pra verificar se é valido
+            let senhaconfirma = document.getElementById("senhaconfirmar");
+            let bairro = document.getElementById("bairro"); //a cidade ainda não é relevante
+
+            //--- VALIDAÇÃO ---
+            if (!((nome.value == "") || (email.value == "") || (bairro.value == "") || (senha.value == "") || (senhaconfirmar.value == ""))) {
+                //se não houver nenhum campo vazio
+                alert("Todos os campos preenchidos");
+                if ((validar(nome.value) == true) && (validar(bairro.value) == true) && (validarEmail(email.value) == true)) {
+                    //se nome, email ou nome do bairro é válido 
+                    if (senha.value == senhaconfirma.value) {
+                        //se as senhas se coincidem
+                        alert("CADASTRO CONCLUIDO. FAÇA O LOGIN");
+
+                        //--- VALIDAÇÃO CONCLUIDA ---
+                        localStorage.setItem("email", email.value);
+                        localStorage.setItem("senha", senha.value);
+                        localStorage.setItem("nome", nome.value);
+                        localStorage.setItem("logado", false);
+                        // ------------- //
+
+                    } else {
+                        alert("ERRO: As senhas não se coincidem");
+                    }
+                } else {
+                    alert("Nome, e-mail e/ou bairro inválido");
+                }
+            } else {
+                alert("ERRO: Algum(s) campo(s) vazio");
+            }
+            //
+        }
+
+        function validar(texto) {
+            //validar nome, bairro e email
+            let padrao = /[^a-zà-ú]/gi;
+
+            let validar = texto.match(padrao);
+
+            if (validar || !texto) {
+                return false;
+            } else {
+                //se não possuir @ é NOME ou BAIRRO
+                return true;
+            }
+        }
+
+        function validarEmail(email) {
+            //criar substring de usuario e dominio separado por @
+            let usuario = email.substring(0, email.indexOf("@"));
+            let dominio = email.substring(email.indexOf("@") + 1, email.length);
+            if ((usuario.length >= 1) && //conter algo no usuario
+                (dominio.length >= 3) && //conter algo antes e depois do . no dominio
+                (usuario.search("@") == -1) && // n conter mais de um @
+                (dominio.search("@") == -1) &&
+                (usuario.search(" ") == -1) && // ... espaços
+                (dominio.search(" ") == -1) &&
+                (dominio.indexOf(".") >= 1) && //dominio deve possuir algum .
+                (dominio.lastIndexOf(".") < dominio.length - 1)) { //o . n ser o ultimo caracter
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <nav>
+            <a href="index.html"><img src="logo.png" alt="Logo da empresa Tá Rolando!" width="120" height="120"></a>
+        <ul>
+			<li><a href="index.html">Início</a></li>
+			<li><a href="conheça.html">Conheça</a></li>
+			<li><a href="quemsomos.html">Quem somos</a></li>
+			<li id="login"><a href="arearestrita.html">Login</a></li>
+			<li id="cadastro"><a href="arearestrita.html">Cadastre-se</a></li>
+		</ul>
+    </nav>
+    <h1 class="areaRestrita">Faça Login ou Registre-se</h1>
+    <article class="login">
+        <!-- Logar -->
+        <h3>Entrar</h3>
+        <p>
+            E-mail:<br>
+            <input type="text" id="emaillogar">
+        </p>
+        <p>
+            Senha:<br>
+            <input type="password" name="senhalogar" id="senhalogar">
+        </p>
+        <p>
+            <input type="button" value="Entrar" onclick="login()">
+        </p>
+    </article>
+    <article class="signup">
+        <!-- Se Registrar -->
+        <h3>Registrar-se</h3>
+        <p>
+            Nome:<br>
+            <input type="text" id="nomeregistrar">
+        </p>
+        <p>
+            E-mail:<br>
+            <input type="text" id="emailregistrar">
+        </p>
+        <p>
+            Cidade:<br>
+            <select name="cidade" id="cidade">
+                <option value="rj">Rio de Janeiro (RJ)</option>
+            </select>
+        </p>
+        <p>
+            Bairro:<br>
+            <input type="text" id="bairro">
+        </p>
+        <p>
+            Senha:<br>
+            <input type="password" name="senharegistrar" id="senharegistrar">
+        </p>
+        <p>
+            Confirme a senha:<br>
+            <input type="password" name="senhaconfirmar" id="senhaconfirmar">
+        </p>
+        <p>
+            <input type="button" value="Registrar" onclick="registrar()">
+        </p>
+    </article>
+</body>
+
+</html>

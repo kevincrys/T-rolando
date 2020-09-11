@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+        <link rel="stylesheet" type="text/css" href="normalize.css">
+		<link rel="stylesheet" type="text/css" href="denuncia.css">
+		<meta charset="utf-8">
+		<title>Tá Rolando!</title>
+        <script>
+              let globalRegis = [[]]
+        function tabelinda(){
+        // RECEBER DADOS//
+            
+        let registros1 = [document.getElementById("data").value];
+        let registros2 = [document.getElementById("ruei").value];
+        let registros3 = [document.getElementById("barr").value];
+        let registros4 = [document.getElementById("nue").value];
+        let registros5 = [document.getElementById("opções").value];
+        let registros6 = [document.getElementById("detalhes").value];
+        let registros7 = [];
+        let status= false
+            if(status== false){registros7.push("Em andamento")};
+            if(status== true){registros7.push("Concluída")};
+            
+        //INSERIR ELEMENTOS DA TABELA NOS COMPONENTES DA MATRIZ//
+        let totalRegistros = [registros1,registros2,registros3,registros4,registros5,registros6,registros7,];
+            console.log(totalRegistros)
+            globalRegis.push(totalRegistros)
+            console.log(globalRegis)
+                for (i = 0; i < registros1.length; i++) { registros1[i] = "<td>" + registros1[i] + "</td>";}
+                for (i = 0; i < registros2.length; i++) { registros2[i] = "<td>" + registros2[i] + "</td>";}
+                for (i = 0; i < registros3.length; i++) { registros3[i] = "<td>" + registros3[i] + "</td>";}
+                for (i = 0; i < registros4.length; i++) { registros4[i] = "<td>" + registros4[i] + "</td>";}
+                for (i = 0; i < registros5.length; i++) { registros5[i] = "<td>" + registros5[i] + "</td>";}
+                for (i = 0; i < registros6.length; i++) { registros6[i] = "<td>" + registros6[i] + "</td>";}
+                for (i = 0; i < registros7.length; i++) { registros7[i] = "<td>" + registros7[i] + "</td>";}
+            
+            //MONTAR TABELA//
+                                                
+            let tabeled=""
+                tabeled= "<table>" + "<th> Denúncias <th>"  + "<tr><td>Data</td><td>Bairro</td><td>Rua</td><td>Número</td><td>Tipo de serviço</td><td>Detalhes</td><td>Status</td><tr>"
+
+                for (i = 0; i < globalRegis.length; i++) { tabeled += "<tr>" + globalRegis[i] + "</tr>";} 
+                     tabeled += "</table>"; 
+                        console.log(tabeled);
+                        document.getElementById("lista").innerHTML = tabeled ;
+                        alert("Denúncia cadastrada");
+        }
+  
+//VERIFICAR DESCRIÇÃO//
+     function pronto(){
+         let descri= document.getElementById("detalhes").value
+         if (descri.length <=10){
+         alert ("só isso?")}
+                      
+                      
+                      }
+   
+                        
+        
+        
+    
+        </script>
+	</head>
+    <body>
+    <nav>
+            <a href="index.html"><img src="logo.png" alt="Logo da empresa Tá Rolando!" width="120" height="120"></a>
+        <ul>
+			<li><a href="index.html">Início</a></li>
+			<li><a href="conheça.html">Conheça</a></li>
+			<li><a href="quemsomos.html">Quem somos</a></li>
+			<li id="login"><a href="arearestrita.html">Login</a></li>
+			<li id="cadastro"><a href="arearestrita.html">Cadastre-se</a></li>
+		</ul>
+    </nav>
+        <aside>
+            <p> Àrea de denúncias</p>
+        <p id="lista"></p>
+        </aside>
+        <main>
+		<article>
+                <h1>Está com algum problema no seu bairro?<br> Diga-nos o que Tá Rolando!</h1>
+                   
+                    
+				<h3>Tipo de serviço:</h3>
+				<select id="opções">
+					<option disabled selected value> -- selecione uma opção -- </option>
+					<option>Animais</option>
+					<option>Conservação</option>
+					<option>Iluminação Pública</option>
+					<option>Limpeza Urbana</option>
+					<option>Meio Ambiente</option>
+					<option>Obra Inacabada</option>
+				</select>
+				<h3>Data do problema:</h3>
+				<input type="date" name="data" id="data">
+				<h3>Rua:<input type="text" name="rua" id="ruei"> </h3> 
+				<h3>Bairro:<input type="text" name="bairro" id="barr"></h3>
+				<h3>Número:<input type="text" name="numero" id="nue"></h3>
+				<h3>Mais detalhes do problema:<br><textarea id="detalhes" onblur="pronto()"></textarea></h3>
+                    <p><button onclick="tabelinda()">ENVIE SUA DENÙNCIA</button></p>
+            </article>
+            </main>
+	</body>
+</html>
